@@ -1,0 +1,85 @@
+#include <Wire.h>
+#include <LiquidCrystal_I2C.h>
+
+// LCD setup (adjust address if needed)
+LiquidCrystal_I2C lcd(0x27, 16, 2);
+
+// Ultrasonic sensor pins
+const int trigPin = 8;
+const int echoPin = 9;
+
+// LED pins
+const int GREEN_LED_1 = 2;
+const int GREEN_LED_2 = 3;
+const int YELLOW_LED_1 = 4;
+const int YELLOW_LED_2 = 5;
+const int RED_LED = 7;
+
+void setup() {
+  Serial.begin(9600);
+
+  // Initialize LCD
+  lcd.begin(16, 2);
+  lcd.backlight();
+
+  // Ultrasonic sensor
+  pinMode(trigPin, OUTPUT);
+  pinMode(echoPin, INPUT);
+
+  // LED pins
+  pinMode(GREEN_LED_1, OUTPUT);
+  pinMode(GREEN_LED_2, OUTPUT);
+  pinMode(YELLOW_LED_1, OUTPUT);
+  pinMode(YELLOW_LED_2, OUTPUT);
+  pinMode(RED_LED, OUTPUT);
+
+  // Turn off all LEDs initially
+  turnOffAllLEDs();
+}
+
+void loop() {
+  // Measure distance
+  digitalWrite(trigPin, LOW);
+  delayMicroseconds(2);
+
+  digitalWrite(trigPin, HIGH);
+  delayMicroseconds(10);
+  digitalWrite(trigPin, LOW);
+
+  long duration = pulseIn(echoPin, HIGH);
+  float distance = duration * 0.034 / 2;
+
+  Serial.print("Distance: ");
+  Serial.print(distance);
+  Serial.println(" cm");
+
+  // Display on LCD
+  lcd.clear();
+  lcd.setCursor(0, 0);
+  lcd.print("Distance: ");
+  lcd.print(distance, 2);
+  lcd.print(" cm");
+
+  // LED logic
+  turnOffAllLEDs();
+
+  if (distance > 0 && distance <= 10) {
+    digitalWrite(GREEN_LED_1, HIGH);
+    digitalWrite(GREEN_LED_2, HIGH);
+  } else if (distance > 10 && distance <= 20) {
+    digitalWrite(YELLOW_LED_1, HIGH);
+    digitalWrite(YELLOW_LED_2, HIGH);
+  } else if (distance > 20) {
+    digitalWrite(RED_LED, HIGH);
+  }
+
+  delay(300);
+}
+
+void turnOffAllLEDs() {
+  digitalWrite(GREEN_LED_1, LOW);
+  digitalWrite(GREEN_LED_2, LOW);
+  digitalWrite(YELLOW_LED_1, LOW);
+  digitalWrite(YELLOW_LED_2, LOW);
+  digitalWrite(RED_LED, LOW);
+}
