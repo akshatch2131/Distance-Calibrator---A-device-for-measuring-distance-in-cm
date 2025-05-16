@@ -39,8 +39,5 @@ This is a great beginner-friendly project to learn sensor interfacing, display h
 - Always use resistors for LEDs to prevent damage
 - Keep ultrasonic sensor unobstructed and pointed straight
 
-## 👨‍💻 Author
-- Your Name (you can link your GitHub profile)
-
 ## 🪄 License
 This project is open-source and free to use under the [MIT License](LICENSE).
