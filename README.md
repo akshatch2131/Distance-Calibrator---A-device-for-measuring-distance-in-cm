@@ -41,7 +41,7 @@ This is a great beginner-friendly project to learn sensor interfacing, display h
 
 ## 🎥 Project Demo Video
 
-[Watch the demo on YouTube](https://y /outu.be/your-video-id)
+[Watch the demo video]((https://drive.google.com/file/d/18n0UGEhbt05ZHWg9V9_vK7sVJ7YUO9Rv/view))
 
 
 ## 🪄 License
